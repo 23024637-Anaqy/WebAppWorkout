@@ -1,11 +1,11 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
+import "./index.css"; // Includes TailwindCSS styles
 import App from "./App";
-import { WorkoutContextProvider } from "./src/context/WorkoutContext";
 
-const root = ReactDOM.createRoot(document.getElementById("root"));
+const root = ReactDOM.createRoot(document.getElementById("root")); // Matches the ID in index.html
 root.render(
-  <WorkoutContextProvider>
+  <React.StrictMode>
     <App />
-  </WorkoutContextProvider>
+  </React.StrictMode>
 );
