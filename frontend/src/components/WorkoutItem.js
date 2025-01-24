@@ -1,8 +1,8 @@
-import React from "react";
-import { useWorkoutContext } from "../context/useWorkoutContext";
+import React, { useContext } from 'react';  // useContext for context
+import { WorkoutContext } from "../context/WorkoutContext.js";
 
 const WorkoutItem = ({ workout }) => {
-  const { dispatch } = useWorkoutContext();
+  const { dispatch } = useContext(WorkoutContext);  // Use useContext hook
 
   const handleDelete = async () => {
     const response = await fetch(`/api/workouts/${workout._id}`, { method: "DELETE" });

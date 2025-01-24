@@ -1,8 +1,8 @@
-import React, { useState } from "react";
-import { useWorkoutContext } from "./context/useWorkoutContext";
+import React, { useState, useContext } from "react";  // useContext for context
+import { WorkoutContext } from "../context/WorkoutContext.js";
 
 const WorkoutForm = () => {
-    const { dispatch } = useWorkoutContext();
+    const { dispatch } = useContext(WorkoutContext);  // Use useContext hook
     const [title, setTitle] = useState("");
     const [reps, setReps] = useState("");
     const [load, setLoad] = useState("");
@@ -65,6 +65,6 @@ const WorkoutForm = () => {
         {error && <div className="text-red-500 mt-4">{error}</div>}
       </form>
     );
-  };
-  
-  export default WorkoutForm;
+};
+
+export default WorkoutForm;
