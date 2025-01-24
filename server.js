@@ -9,11 +9,16 @@ const PORT = process.env.PORT || 5000;
 // Middleware for parsing JSON requests
 app.use(express.json());
 
-// MongoDB connection
-mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
-  .then(() => console.log('Connected to MongoDB'))
-  .catch((err) => console.log('Error connecting to MongoDB:', err));
+const connectToDatabase = async () => {
+  try {
+    await mongoose.connect(process.env.MONGO_URI); // Remove deprecated options
+    console.log("Connected to MongoDB");
+  } catch (error) {
+    console.error("Error connecting to MongoDB:", error);
+  }
+};
 
+connectToDatabase();
 // Example API route for workouts
 app.get('/api/workouts', (req, res) => {
   // This would fetch workouts from your database in a real app
