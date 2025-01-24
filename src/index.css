@@ -1,0 +1,11 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: 'Cast Iron';
+  src: url('C:\Curriculum\Year 2\Sem 2\C219 Web App Dev\Lesson 10\mern-workout-app-starter-main\backend\src\public\castiron-condensed.otf') format('woff2'),
+       url('C:\Curriculum\Year 2\Sem 2\C219 Web App Dev\Lesson 10\mern-workout-app-starter-main\backend\src\public\castiron-condensed.otf') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
