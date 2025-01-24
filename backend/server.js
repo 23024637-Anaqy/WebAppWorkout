@@ -1,55 +1,44 @@
-const express = require('express');
-const mongoose = require('mongoose');
-const path = require('path');
-require('dotenv').config(); // Load environment variables from .env file
+const express = require("express");
+const mongoose = require("mongoose");
+const path = require("path");
+require("dotenv").config();
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 5000;
 
-// Middleware for parsing JSON requests
+// Middleware
 app.use(express.json());
 
+// Connect to MongoDB
+mongoose.set("strictQuery", true); // Suppress deprecation warning
 const connectToDatabase = async () => {
   try {
-    await mongoose.connect(process.env.MONGO_URI); // Remove deprecated options
+    await mongoose.connect(process.env.MONGO_URI);
     console.log("Connected to MongoDB");
   } catch (error) {
     console.error("Error connecting to MongoDB:", error);
   }
 };
-
 connectToDatabase();
-// Example API route for workouts
-app.get('/api/workouts', (req, res) => {
-  // This would fetch workouts from your database in a real app
-  res.json({ message: 'This is the workouts endpoint' });
+
+// Example API route
+app.get("/api/workouts", (req, res) => {
+  const workouts = [
+    { _id: "1", name: "Workout A", duration: 30 },
+    { _id: "2", name: "Workout B", duration: 45 },
+  ];
+  res.json(workouts);
 });
 
-// Example POST route for creating a workout
-app.post('/api/workouts', (req, res) => {
-  const newWorkout = req.body; // Assuming the workout data comes in the request body
-  res.status(201).json({
-    message: 'Workout created',
-    data: newWorkout,
-  });
-});
+// Serve frontend in production
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname, "frontend/build")));
 
-// Serve static files (for frontend, e.g., React app) in production
-if (process.env.NODE_ENV === 'production') {
-  app.use(express.static(path.join(__dirname, 'frontend/build')));
-
-  // Catch-all route to send back the React app
-  app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, 'frontend', 'build', 'index.html'));
+  app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "frontend", "build", "index.html"));
   });
 }
 
-// Root route (for testing)
-app.get('/', (req, res) => {
-  res.send('Hello, World!');
-});
-
-// Start the server
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });
